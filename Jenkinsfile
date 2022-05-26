@@ -1,8 +1,8 @@
 pipeline {
   agent any
     tools {
-      maven 'maven3'
-                 jdk 'JDK8'
+      maven 'rakhimaven'
+                 jdk 'rakhijdk'
     }
     stages {      
         stage('Build maven ') {
@@ -22,8 +22,8 @@ pipeline {
         stage('Build docker image') {
            steps {
                script {         
-                 def customImage = docker.build('cloudfreak/petclinic', "./docker")
-                 docker.withRegistry('https://cloudfreak.azurecr.io', 'acr-demo') {
+                 def customImage = docker.build('application/rakhi', "./docker")
+                 docker.withRegistry('https://rakhiregistry.azurecr.io', 'rakhiacr') {
                  customImage.push("${env.BUILD_NUMBER}")
                  }                     
            }
